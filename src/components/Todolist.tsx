@@ -4,10 +4,10 @@ import { Button } from './Buttons'
 type TodoPropsType = {
 	title: string
 	tasks: TaskType[]
-	date?: string
+	removeTask: (taskId: number) => void
 }
 
-export const Todolist = ({ title, tasks }: TodoPropsType) => {
+export const Todolist = ({ title, tasks, removeTask }: TodoPropsType) => {
 	return (
 		<div>
 			<h3>{title}</h3>
@@ -24,6 +24,7 @@ export const Todolist = ({ title, tasks }: TodoPropsType) => {
 							<li key={task.id}>
 								<input type='checkbox' checked={task.isDone} />
 								<span>{task.title}</span>
+								<Button title={'x'} onClick={() => removeTask(task.id)} />
 							</li>
 						)
 					})}
