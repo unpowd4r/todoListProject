@@ -1,13 +1,19 @@
-import { TaskType } from '../App'
+import { FilterValuesType, TaskType } from '../App'
 import { Button } from './Buttons'
 
 type TodoPropsType = {
 	title: string
 	tasks: TaskType[]
 	removeTask: (taskId: number) => void
+	changeFilter: (filter: FilterValuesType) => void
 }
 
-export const Todolist = ({ title, tasks, removeTask }: TodoPropsType) => {
+export const Todolist = ({
+	title,
+	tasks,
+	removeTask,
+	changeFilter,
+}: TodoPropsType) => {
 	return (
 		<div>
 			<h3>{title}</h3>
@@ -31,9 +37,9 @@ export const Todolist = ({ title, tasks, removeTask }: TodoPropsType) => {
 				</ul>
 			)}
 			<div>
-				<Button title={'All'} />
-				<Button title={'Active'} />
-				<Button title={'Completed'} />
+				<Button title={'All'} onClick={() => changeFilter('all')} />
+				<Button title={'Active'} onClick={() => changeFilter('active')} />
+				<Button title={'Completed'} onClick={() => changeFilter('completed')} />
 			</div>
 		</div>
 	)
