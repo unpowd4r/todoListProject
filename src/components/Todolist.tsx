@@ -5,6 +5,7 @@ import { Button } from './Buttons'
 type TodoPropsType = {
 	title: string
 	tasks: TaskType[]
+	filter: string
 	removeTask: (taskId: string) => void
 	changeFilter: (filter: FilterValuesType) => void
 	addTask: (title: string) => void
@@ -18,6 +19,7 @@ export const Todolist = ({
 	changeFilter,
 	addTask,
 	changeTaskStatus,
+	filter,
 }: TodoPropsType) => {
 	const [taskTitle, setTaskTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
@@ -74,7 +76,7 @@ export const Todolist = ({
 							changeTaskStatus(task.id, newStatusValue)
 						}
 						return (
-							<li key={task.id}>
+							<li key={task.id} className={task.isDone ? 'is-done' : ''}>
 								<input
 									type='checkbox'
 									checked={task.isDone}
@@ -88,12 +90,18 @@ export const Todolist = ({
 				</ul>
 			)}
 			<div>
-				<Button title={'All'} onClick={() => changeFilterTasksHandler('all')} />
 				<Button
+					className={filter === 'all' ? 'active-filter' : ''}
+					title={'All'}
+					onClick={() => changeFilterTasksHandler('all')}
+				/>
+				<Button
+					className={filter === 'active' ? 'active-filter' : ''}
 					title={'Active'}
 					onClick={() => changeFilterTasksHandler('active')}
 				/>
 				<Button
+					className={filter === 'completed' ? 'active-filter' : ''}
 					title={'Completed'}
 					onClick={() => changeFilterTasksHandler('completed')}
 				/>
