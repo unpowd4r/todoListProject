@@ -8,6 +8,7 @@ type TodoPropsType = {
 	removeTask: (taskId: string) => void
 	changeFilter: (filter: FilterValuesType) => void
 	addTask: (title: string) => void
+	changeTaskStatus: (taskId: string, taskStatus: boolean) => void
 }
 
 export const Todolist = ({
@@ -16,12 +17,18 @@ export const Todolist = ({
 	removeTask,
 	changeFilter,
 	addTask,
+	changeTaskStatus,
 }: TodoPropsType) => {
 	const [taskTitle, setTaskTitle] = useState('')
+	const [error, setError] = useState<string | null>(null)
 
 	const addTaskHandler = () => {
-		addTask(taskTitle)
-		setTaskTitle('')
+		if (taskTitle.trim() !== '') {
+			addTask(taskTitle.trim())
+			setTaskTitle('')
+		} else {
+			setError('Title is required')
+		}
 	}
 
 	const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +36,7 @@ export const Todolist = ({
 	}
 
 	const addTaskOnKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+		setError(null)
 		if (event.key === 'Enter') {
 			addTaskHandler()
 		}
@@ -43,11 +51,13 @@ export const Todolist = ({
 			<h3>{title}</h3>
 			<div>
 				<input
+					className={error ? 'error' : ''}
 					value={taskTitle}
 					onChange={changeTaskTitleHandler}
 					onKeyUp={addTaskOnKeyUpHandler}
 				/>
 				<Button title={'+'} onClick={addTaskHandler} />
+				{error && <div className={'error-message'}>{error}</div>}
 			</div>
 			{tasks.length === 0 ? (
 				<p>Тасок нет</p>
@@ -57,9 +67,19 @@ export const Todolist = ({
 						const removeTaskHandler = () => {
 							removeTask(task.id)
 						}
+						const changeTaskStatusHandler = (
+							e: ChangeEvent<HTMLInputElement>
+						) => {
+							const newStatusValue = e.currentTarget.checked
+							changeTaskStatus(task.id, newStatusValue)
+						}
 						return (
 							<li key={task.id}>
-								<input type='checkbox' checked={task.isDone} />
+								<input
+									type='checkbox'
+									checked={task.isDone}
+									onChange={changeTaskStatusHandler}
+								/>
 								<span>{task.title}</span>
 								<Button title={'x'} onClick={removeTaskHandler} />
 							</li>
