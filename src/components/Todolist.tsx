@@ -49,7 +49,7 @@ export const Todolist = ({
 	}
 
 	return (
-		<div>
+		<div className='todo-card'>
 			<h3>{title}</h3>
 			<div>
 				<input
