@@ -4,12 +4,17 @@ import { Button } from './Buttons'
 
 type TodoPropsType = {
 	title: string
+	todolistId: string
 	tasks: TaskType[]
-	filter: string
-	removeTask: (taskId: string) => void
-	changeFilter: (filter: FilterValuesType) => void
-	addTask: (title: string) => void
-	changeTaskStatus: (taskId: string, taskStatus: boolean) => void
+	removeTask: (taskId: string, todolistId: string) => void
+	changeFilter: (filter: FilterValuesType, todolistId: string) => void
+	addTask: (title: string, todolistId: string) => void
+	changeTaskStatus: (
+		taskId: string,
+		taskStatus: boolean,
+		newTodolistTasks: string
+	) => void
+	filter: FilterValuesType
 }
 
 export const Todolist = ({
@@ -20,13 +25,14 @@ export const Todolist = ({
 	addTask,
 	changeTaskStatus,
 	filter,
+	todolistId,
 }: TodoPropsType) => {
 	const [taskTitle, setTaskTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
 
 	const addTaskHandler = () => {
 		if (taskTitle.trim() !== '') {
-			addTask(taskTitle.trim())
+			addTask(taskTitle.trim(), todolistId)
 			setTaskTitle('')
 		} else {
 			setError('Title is required')
@@ -45,7 +51,7 @@ export const Todolist = ({
 	}
 
 	const changeFilterTasksHandler = (filter: FilterValuesType) => {
-		changeFilter(filter)
+		changeFilter(filter, todolistId)
 	}
 
 	return (
@@ -67,13 +73,13 @@ export const Todolist = ({
 				<ul>
 					{tasks.map(task => {
 						const removeTaskHandler = () => {
-							removeTask(task.id)
+							removeTask(task.id, todolistId)
 						}
 						const changeTaskStatusHandler = (
 							e: ChangeEvent<HTMLInputElement>
 						) => {
 							const newStatusValue = e.currentTarget.checked
-							changeTaskStatus(task.id, newStatusValue)
+							changeTaskStatus(task.id, newStatusValue, todolistId)
 						}
 						return (
 							<li key={task.id} className={task.isDone ? 'is-done' : ''}>
