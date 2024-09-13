@@ -80,3 +80,8 @@
 	font-style: 30px;
 	color: #40506c;
 }
+
+.todolist-title-container {
+	display: flex;
+	align-items: center;
+}

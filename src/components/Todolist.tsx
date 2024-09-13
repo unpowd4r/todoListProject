@@ -6,6 +6,7 @@ type TodoPropsType = {
 	title: string
 	todolistId: string
 	tasks: TaskType[]
+	filter: FilterValuesType
 	removeTask: (taskId: string, todolistId: string) => void
 	changeFilter: (filter: FilterValuesType, todolistId: string) => void
 	addTask: (title: string, todolistId: string) => void
@@ -14,7 +15,7 @@ type TodoPropsType = {
 		taskStatus: boolean,
 		newTodolistTasks: string
 	) => void
-	filter: FilterValuesType
+	removeTodolist: (todolistId: string) => void
 }
 
 export const Todolist = ({
@@ -26,6 +27,7 @@ export const Todolist = ({
 	changeTaskStatus,
 	filter,
 	todolistId,
+	removeTodolist,
 }: TodoPropsType) => {
 	const [taskTitle, setTaskTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
@@ -37,6 +39,10 @@ export const Todolist = ({
 		} else {
 			setError('Title is required')
 		}
+	}
+
+	const removeTodolistHandler = () => {
+		removeTodolist(todolistId)
 	}
 
 	const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +62,11 @@ export const Todolist = ({
 
 	return (
 		<div className='todo-card'>
-			<h3>{title}</h3>
+			<div className={'todolist-title-container'}>
+				<h3>{title}</h3>
+				<Button title={'x'} onClick={removeTodolistHandler} />
+			</div>
+
 			<div>
 				<input
 					className={error ? 'error' : ''}
