@@ -7,7 +7,7 @@
 	display: flex;
 	min-height: 100vh;
 
-	background-color: #0077c3;
+	background-color: #779cb4;
 }
 
 .App > div {
@@ -19,16 +19,11 @@
 	gap: 10px;
 }
 
-#root > div > div > div:nth-child(4) > button {
-	border-radius: 4px;
-	box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
-	border: 0;
-}
-
 .App > div > ul > li {
 	width: 180px;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 
 	list-style-type: none;
 	background-color: #fff;
@@ -55,30 +50,6 @@
 
 .is-done {
 	opacity: 0.5;
-}
-
-.todo-card {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-
-	padding: 10px;
-
-	max-width: 340px;
-	width: 100%;
-	min-height: 362px;
-	height: 100%;
-
-	background-color: #e3e4e6;
-	border-radius: 5px;
-}
-
-.todo-card > h3 {
-	font-family: 'Roboto', sans-serif;
-	font-weight: 700;
-	font-style: 30px;
-	color: #40506c;
 }
 
 .todolist-title-container {
