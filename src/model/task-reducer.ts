@@ -1,8 +1,10 @@
 import { v1 } from 'uuid'
-import { TasksStateType } from '../App'
+import { TasksStateType } from '../app/App'
 
-export const taskReducer = (
-	state: TasksStateType,
+const initialState: TasksStateType = {}
+
+export const tasksReducer = (
+	state: TasksStateType = initialState,
 	action: ActionsType
 ): TasksStateType => {
 	switch (action.type) {
@@ -64,14 +66,14 @@ export const taskReducer = (
 			}
 		}
 
-		case 'DELETE-TODOLIST': {
+		case 'REMOVE-TODOLIST': {
 			const newState = { ...state }
-			delete newState[action.payload.todolistId]
+			delete newState[action.payload.id]
 			return newState
 		}
 
 		default:
-			throw new Error("I don't understand this type")
+			return state
 	}
 }
 
@@ -90,10 +92,13 @@ type ActionsType =
 	| AddTodolistActionType
 	| RemoveTodolistActionType
 
-export const removeTaskAC = (taskId: string, todolistId: string) => {
+export const removeTaskAC = (payload: {
+	taskId: string
+	todolistId: string
+}) => {
 	return {
 		type: 'REMOVE-TASK',
-		payload: { taskId, todolistId },
+		payload,
 	} as const
 }
 
@@ -105,38 +110,38 @@ export const addTodolistAC = (title: string) => {
 	} as const
 }
 
-export const addTaskAC = (title: string, todolistId: string) => {
+export const addTaskAC = (payload: { title: string; todolistId: string }) => {
 	return {
 		type: 'ADD-TASK',
-		payload: { title, todolistId },
+		payload,
 	} as const
 }
 
-export const changeTaskStatusAC = (
-	taskId: string,
-	isDone: boolean,
+export const changeTaskStatusAC = (payload: {
+	taskId: string
+	isDone: boolean
 	todolistId: string
-) => {
+}) => {
 	return {
 		type: 'CHANGE-TASK',
-		payload: { taskId, isDone, todolistId },
+		payload,
 	} as const
 }
 
-export const changeTaskTitleAC = (
-	taskId: string,
-	title: string,
+export const changeTaskTitleAC = (payload: {
+	taskId: string
+	title: string
 	todolistId: string
-) => {
+}) => {
 	return {
 		type: 'CHANGE-TASK-TITLE',
-		payload: { taskId, title, todolistId },
+		payload,
 	} as const
 }
 
 export const removeTodolistAC = (todolistId: string) => {
 	return {
-		type: 'DELETE-TODOLIST',
-		payload: { todolistId },
+		type: 'REMOVE-TODOLIST',
+		payload: { id: todolistId },
 	} as const
 }
