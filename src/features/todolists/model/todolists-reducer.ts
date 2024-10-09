@@ -1,5 +1,5 @@
 import { v1 } from 'uuid'
-import { FilterValuesType, TodolistType } from '../app/App'
+import { FilterValuesType, TodolistType } from '../../../app/App'
 
 export const removeTodolistAC = (todolistId: string) => {
 	return { type: 'REMOVE-TODOLIST', payload: { id: todolistId } } as const
@@ -38,9 +38,6 @@ type ActionType =
 	| AddTodolistActionType
 	| ChangeTodolistTitleActionType
 	| ChangeTodolistFilterActionType
-
-let todolistId1 = v1()
-let todolistId2 = v1()
 
 const initialState: TodolistType[] = []
 
