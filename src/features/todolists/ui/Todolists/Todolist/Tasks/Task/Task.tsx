@@ -1,8 +1,8 @@
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Checkbox, IconButton, ListItem } from '@mui/material'
+import { EditableSpan } from 'common/components/'
 import { ChangeEvent } from 'react'
 import { TaskType, TodolistType } from '../../../../../../../app/App'
-import { EditableSpan } from '../../../../../../../common/components/EditableSpan/EditableSpan'
 import { useAppDispatch } from '../../../../../../../common/hooks/useAppDispatch'
 import {
 	changeTaskStatusAC,
