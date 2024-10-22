@@ -1,5 +1,5 @@
-import { TodolistType } from '../../../app/App'
 import { RootState } from '../../../app/store'
+import { DomainTodolist } from './todolists-reducer'
 
-export const selectTodolists = (state: RootState): TodolistType[] =>
+export const selectTodolists = (state: RootState): DomainTodolist[] =>
 	state.todolists
