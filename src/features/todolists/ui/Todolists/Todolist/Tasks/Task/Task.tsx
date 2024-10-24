@@ -7,9 +7,9 @@ import { DomainTodolist } from 'features/todolists/model/todolists-reducer'
 import { ChangeEvent } from 'react'
 import { useAppDispatch } from '../../../../../../../common/hooks/useAppDispatch'
 import {
-	changeTaskStatusAC,
-	changeTaskTitleAC,
-	removeTaskAC,
+	changeTaskStatusTC,
+	changeTaskTitleTC,
+	removeTaskTC,
 } from '../../../../../model/task-reducer'
 import { getListItemSx } from './Task.styles'
 
@@ -22,19 +22,21 @@ export const Task = ({ task, todolist }: Props) => {
 	const dispatch = useAppDispatch()
 
 	const removeTaskHandler = () => {
-		dispatch(removeTaskAC({ taskId: task.id, todolistId: todolist.id }))
+		dispatch(removeTaskTC({ taskId: task.id, todolistId: todolist.id }))
 	}
 
 	const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-		const isDone = e.currentTarget.checked
+		const status = e.currentTarget.checked
+			? TaskStatus.Completed
+			: TaskStatus.New
 		dispatch(
-			changeTaskStatusAC({ taskId: task.id, isDone, todolistId: todolist.id })
+			changeTaskStatusTC({ taskId: task.id, status, todolistId: todolist.id })
 		)
 	}
 
 	const changeTaskTitleHandler = (title: string) => {
 		dispatch(
-			changeTaskTitleAC({ taskId: task.id, title, todolistId: todolist.id })
+			changeTaskTitleTC({ taskId: task.id, title, todolistId: todolist.id })
 		)
 	}
 
