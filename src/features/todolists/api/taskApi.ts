@@ -19,18 +19,7 @@ export const tasksApi = {
 			`todo-lists/${todolistId}/tasks/${taskId}`
 		)
 	},
-	updateTaskStatus(payload: {
-		todolistId: string
-		taskId: string
-		model: UpdateTaskModel
-	}) {
-		const { todolistId, taskId, model } = payload
-		return instance.put<BaseResponse<{ item: DomainTask }>>(
-			`todo-lists/${todolistId}/tasks/${taskId}`,
-			model
-		)
-	},
-	updateTaskTitle(payload: {
+	updateTask(payload: {
 		todolistId: string
 		taskId: string
 		model: UpdateTaskModel

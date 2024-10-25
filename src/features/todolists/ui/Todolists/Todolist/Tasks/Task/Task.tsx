@@ -6,11 +6,7 @@ import { DomainTask } from 'features/todolists/api/tasksApi.types'
 import { DomainTodolist } from 'features/todolists/model/todolists-reducer'
 import { ChangeEvent } from 'react'
 import { useAppDispatch } from '../../../../../../../common/hooks/useAppDispatch'
-import {
-	changeTaskStatusTC,
-	changeTaskTitleTC,
-	removeTaskTC,
-} from '../../../../../model/task-reducer'
+import { removeTaskTC, updateTaskTC } from '../../../../../model/task-reducer'
 import { getListItemSx } from './Task.styles'
 
 type Props = {
@@ -30,13 +26,21 @@ export const Task = ({ task, todolist }: Props) => {
 			? TaskStatus.Completed
 			: TaskStatus.New
 		dispatch(
-			changeTaskStatusTC({ taskId: task.id, status, todolistId: todolist.id })
+			updateTaskTC({
+				taskId: task.id,
+				todolistId: todolist.id,
+				domainModel: { status },
+			})
 		)
 	}
 
 	const changeTaskTitleHandler = (title: string) => {
 		dispatch(
-			changeTaskTitleTC({ taskId: task.id, title, todolistId: todolist.id })
+			updateTaskTC({
+				taskId: task.id,
+				todolistId: todolist.id,
+				domainModel: { title },
+			})
 		)
 	}
 
