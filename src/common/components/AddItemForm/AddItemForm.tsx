@@ -5,9 +5,10 @@ import { ChangeEvent, KeyboardEvent, useState } from 'react'
 
 type Props = {
 	addItem: (title: string) => void
+	disabled?: boolean
 }
 
-export const AddItemForm = ({ addItem }: Props) => {
+export const AddItemForm = ({ addItem, disabled }: Props) => {
 	const [title, setTaskTitle] = useState('')
 	const [error, setError] = useState<string | null>(null)
 
@@ -41,8 +42,13 @@ export const AddItemForm = ({ addItem }: Props) => {
 				helperText={error}
 				onChange={changeItemTitleHandler}
 				onKeyUp={addItemOnKeyUpHandler}
+				disabled={disabled}
 			/>
-			<IconButton onClick={addItemHandler} color={'primary'}>
+			<IconButton
+				onClick={addItemHandler}
+				color={'primary'}
+				disabled={disabled}
+			>
 				<AddBoxIcon />
 			</IconButton>
 		</div>

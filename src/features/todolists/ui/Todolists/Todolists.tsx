@@ -9,7 +9,6 @@ import { Todolist } from './Todolist/Todolist'
 
 export const Todolists = () => {
 	const todolists = useAppSelector(selectTodolists)
-
 	const dispatch = useAppDispatch()
 
 	useEffect(() => {
