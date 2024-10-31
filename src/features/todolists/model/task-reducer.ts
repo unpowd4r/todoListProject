@@ -1,3 +1,4 @@
+import { setAppErrorAC, setAppStatusAC } from 'app/app-reducer'
 import { AppDispatch, RootState } from 'app/store'
 import { TaskPriority, TaskStatus } from 'common/enums/enums'
 import { Dispatch } from 'redux'
@@ -77,12 +78,12 @@ export const tasksReducer = (
 	}
 }
 
-export const fetchTasksTC = (todolistId: string) => {
-	return (dispatch: AppDispatch) => {
-		tasksApi.getTasks(todolistId).then(res => {
-			dispatch(setTasksAC({ tasks: res.data.items, todolistId }))
-		})
-	}
+export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
+	dispatch(setAppStatusAC('loading'))
+	tasksApi.getTasks(todolistId).then(res => {
+		dispatch(setAppStatusAC('succeeded'))
+		dispatch(setTasksAC({ tasks: res.data.items, todolistId }))
+	})
 }
 
 export const removeTaskTC =
@@ -94,8 +95,19 @@ export const removeTaskTC =
 
 export const addTaskTC =
 	(arg: { title: string; todolistId: string }) => (dispatch: Dispatch) => {
+		dispatch(setAppStatusAC('loading'))
 		tasksApi.createTask(arg).then(res => {
-			dispatch(addTaskAC({ task: res.data.data.item }))
+			if (res.data.resultCode === 0) {
+				dispatch(addTaskAC({ task: res.data.data.item }))
+				dispatch(setAppStatusAC('succeeded'))
+			} else {
+				if (res.data.messages.length) {
+					dispatch(setAppErrorAC(res.data.messages[0]))
+				} else {
+					dispatch(setAppErrorAC('Some error occurred'))
+				}
+				dispatch(setAppStatusAC('failed'))
+			}
 		})
 	}
 

@@ -1,5 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
+import { ErrorSnackbar } from 'common/components'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { DomainTask } from 'features/todolists/api/tasksApi.types'
 import { fetchTodolistsTC } from 'features/todolists/model/todolists-reducer'
@@ -26,6 +27,7 @@ export const App = () => {
 			<CssBaseline />
 			<Header />
 			<Main />
+			<ErrorSnackbar />
 		</ThemeProvider>
 	)
 }
