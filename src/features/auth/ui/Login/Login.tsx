@@ -6,9 +6,13 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid2'
 import TextField from '@mui/material/TextField'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { getTheme } from 'common/theme/theme'
+import { loginTC } from 'features/auth/model/auth-reducer'
+import { selectIsLoggedIn } from 'features/auth/model/authSelectors'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { Navigate } from 'react-router-dom'
 import { selectThemeMode } from '../../../../app/appSelectors'
 import s from './Login.module.css'
 
@@ -20,7 +24,9 @@ type Inputs = {
 
 export const Login = () => {
 	const themeMode = useAppSelector(selectThemeMode)
+	const isLoggedIn = useAppSelector(selectIsLoggedIn)
 	const theme = getTheme(themeMode)
+	const dispatch = useAppDispatch()
 
 	const {
 		register,
@@ -33,8 +39,11 @@ export const Login = () => {
 	})
 
 	const onSubmit: SubmitHandler<Inputs> = data => {
-		console.log(data)
+		dispatch(loginTC(data))
 		reset()
+	}
+	if (isLoggedIn) {
+		return <Navigate to={'/'} />
 	}
 
 	return (

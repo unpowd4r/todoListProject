@@ -1,3 +1,4 @@
+import { authReducer } from 'features/auth/model/auth-reducer'
 import {
 	applyMiddleware,
 	combineReducers,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
 	tasks: tasksReducer,
 	todolists: todolistsReducer,
 	app: appReducer,
+	auth: authReducer,
 })
 export const store = legacy_createStore(rootReducer, {}, applyMiddleware(thunk))
 

@@ -90,6 +90,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: AppDispatch) => {
 		})
 		.catch(error => {
 			handleServerNetworkError(error, dispatch)
+			dispatch(setAppStatusAC('failed'))
 		})
 }
 
@@ -104,10 +105,12 @@ export const removeTaskTC =
 					dispatch(removeTaskAC(arg))
 				} else {
 					handleServerAppError(res.data, dispatch)
+					dispatch(setAppStatusAC('failed'))
 				}
 			})
 			.catch(error => {
 				handleServerNetworkError(error, dispatch)
+				dispatch(setAppStatusAC('failed'))
 			})
 	}
 
@@ -122,10 +125,12 @@ export const addTaskTC =
 					dispatch(setAppStatusAC('succeeded'))
 				} else {
 					handleServerAppError(res.data, dispatch)
+					dispatch(setAppStatusAC('failed'))
 				}
 			})
 			.catch(error => {
 				handleServerNetworkError(error, dispatch)
+				dispatch(setAppStatusAC('failed'))
 			})
 	}
 
@@ -160,10 +165,12 @@ export const updateTaskTC =
 						dispatch(updateTaskAC(arg))
 					} else {
 						handleServerAppError(res.data, dispatch)
+						dispatch(setAppStatusAC('failed'))
 					}
 				})
 				.catch(error => {
 					handleServerNetworkError(error, dispatch)
+					dispatch(setAppStatusAC('failed'))
 				})
 		}
 	}
