@@ -6,7 +6,7 @@ import {
 	DomainTodolist,
 	removeTodolistTC,
 	updateTodolistTitleTC,
-} from '../../../../model/todolists-reducer'
+} from '../../../../model/todolistsSlice'
 import s from './TodolistTitle.module.css'
 
 type Props = {

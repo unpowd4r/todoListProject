@@ -9,8 +9,7 @@ import TextField from '@mui/material/TextField'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { getTheme } from 'common/theme/theme'
-import { loginTC } from 'features/auth/model/auth-reducer'
-import { selectIsLoggedIn } from 'features/auth/model/authSelectors'
+import { authSlice, loginTC } from 'features/auth/model/authSlice'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { Navigate } from 'react-router-dom'
 import { selectThemeMode } from '../../../../app/appSelectors'
@@ -24,7 +23,7 @@ type Inputs = {
 
 export const Login = () => {
 	const themeMode = useAppSelector(selectThemeMode)
-	const isLoggedIn = useAppSelector(selectIsLoggedIn)
+	const isLoggedIn = useAppSelector(authSlice.selectors.selectIsLoggedIn)
 	const theme = getTheme(themeMode)
 	const dispatch = useAppDispatch()
 

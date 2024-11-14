@@ -2,8 +2,8 @@ import { Container } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { Path } from 'common/router'
-import { selectIsLoggedIn } from 'features/auth/model/authSelectors'
-import { addTodolistTC } from 'features/todolists/model/todolists-reducer'
+import { authSlice } from 'features/auth/model/authSlice'
+import { addTodolistTC } from 'features/todolists/model/todolistsSlice'
 import { Navigate } from 'react-router-dom'
 import { AddItemForm } from '../common/components/AddItemForm/AddItemForm'
 import { useAppDispatch } from '../common/hooks/useAppDispatch'
@@ -16,7 +16,7 @@ export const Main = () => {
 		dispatch(addTodolistTC(title))
 	}
 
-	const isLoggedIn = useAppSelector(selectIsLoggedIn)
+	const isLoggedIn = useAppSelector(authSlice.selectors.selectIsLoggedIn)
 
 	if (!isLoggedIn) {
 		return <Navigate to={Path.Login} />

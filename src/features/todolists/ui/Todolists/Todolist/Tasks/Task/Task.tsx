@@ -3,10 +3,10 @@ import { Checkbox, IconButton, ListItem } from '@mui/material'
 import { EditableSpan } from 'common/components/'
 import { TaskStatus } from 'common/enums/enums'
 import { DomainTask } from 'features/todolists/api/tasksApi.types'
-import { DomainTodolist } from 'features/todolists/model/todolists-reducer'
+import { DomainTodolist } from 'features/todolists/model/todolistsSlice'
 import { ChangeEvent } from 'react'
 import { useAppDispatch } from '../../../../../../../common/hooks/useAppDispatch'
-import { removeTaskTC, updateTaskTC } from '../../../../../model/task-reducer'
+import { removeTaskTC, updateTaskTC } from '../../../../../model/taskSlice'
 import { getListItemSx } from './Task.styles'
 
 type Props = {

@@ -1,7 +1,7 @@
 import { Paper } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { fetchTodolistsTC } from 'features/todolists/model/todolists-reducer'
+import { fetchTodolistsTC } from 'features/todolists/model/todolistsSlice'
 import { useEffect } from 'react'
 import { useAppSelector } from '../../../../common/hooks/useAppSelector'
 import { selectTodolists } from '../../model/todolistsSelectors'

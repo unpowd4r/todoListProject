@@ -3,10 +3,9 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { ErrorSnackbar } from 'common/components'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { initializeAppTC } from 'features/auth/model/auth-reducer'
-import { selectIsInitialized } from 'features/auth/model/authSelectors'
+import { authSlice, initializeAppTC } from 'features/auth/model/authSlice'
 import { DomainTask } from 'features/todolists/api/tasksApi.types'
-import { fetchTodolistsTC } from 'features/todolists/model/todolists-reducer'
+import { fetchTodolistsTC } from 'features/todolists/model/todolistsSlice'
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Header } from '../common/components/Header'
@@ -21,7 +20,7 @@ export type TasksStateType = {
 
 export const App = () => {
 	const themeMode = useAppSelector(selectThemeMode)
-	const isInitialized = useAppSelector(selectIsInitialized)
+	const isInitialized = useAppSelector(authSlice.selectors.selectIsInitialized)
 
 	const dispatch = useAppDispatch()
 
