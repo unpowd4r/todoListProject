@@ -14,8 +14,6 @@ export type DomainTodolist = Todolist & {
 	entityStatus: RequestStatus
 }
 
-const initialState: DomainTodolist[] = []
-
 export const todolistsSlice = createSlice({
 	name: 'todolists',
 	initialState: [] as DomainTodolist[],
@@ -27,11 +25,12 @@ export const todolistsSlice = createSlice({
 			}
 		}),
 		addTodolist: create.reducer<{ todolist: Todolist }>((state, action) => {
-			state.unshift({
+			const newTodolist: DomainTodolist = {
 				...action.payload.todolist,
 				filter: 'all',
 				entityStatus: 'idle',
-			})
+			}
+			state.unshift(newTodolist)
 		}),
 		changeTodolistTitle: create.reducer<{ id: string; title: string }>(
 			(state, action) => {
@@ -68,7 +67,23 @@ export const todolistsSlice = createSlice({
 			return []
 		}),
 	}),
+	selectors: {
+		selectTodolists: state => state,
+	},
 })
+
+export const { selectTodolists } = todolistsSlice.selectors
+export const {
+	removeTodolist,
+	addTodolist,
+	changeTodolistEntityStatus,
+	changeTodolistTitle,
+	clearTodolists,
+	setTodolists,
+	changeTodolistFilter,
+} = todolistsSlice.actions
+
+export const todolistsReducer = todolistsSlice.reducer
 
 export const fetchTodolistsTC = (dispatch: Dispatch) => {
 	dispatch(setAppStatus({ status: 'loading' }))
@@ -88,9 +103,10 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
 	todolistsApi
 		.createTodolist(title)
 		.then(res => {
-			const newTodolist = res.data.data.item
-			dispatch(setAppStatus({ status: 'succeeded' }))
-			dispatch(addTodolist({ todolist: newTodolist }))
+			if (res.data.resultCode === ResultCode.Success) {
+				dispatch(setAppStatus({ status: 'succeeded' }))
+				dispatch(addTodolist({ todolist: res.data.data.item }))
+			}
 		})
 		.catch(error => {
 			handleServerNetworkError(error, dispatch)
@@ -135,15 +151,3 @@ export const updateTodolistTitleTC =
 				handleServerNetworkError(error, dispatch)
 			})
 	}
-
-export const {
-	removeTodolist,
-	addTodolist,
-	changeTodolistEntityStatus,
-	changeTodolistTitle,
-	clearTodolists,
-	setTodolists,
-	changeTodolistFilter,
-} = todolistsSlice.actions
-
-export const todolistsReducer = todolistsSlice.reducer

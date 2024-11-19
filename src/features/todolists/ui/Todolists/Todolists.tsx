@@ -1,10 +1,12 @@
 import { Paper } from '@mui/material'
 import Grid from '@mui/material/Grid2'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { fetchTodolistsTC } from 'features/todolists/model/todolistsSlice'
+import {
+	fetchTodolistsTC,
+	selectTodolists,
+} from 'features/todolists/model/todolistsSlice'
 import { useEffect } from 'react'
 import { useAppSelector } from '../../../../common/hooks/useAppSelector'
-import { selectTodolists } from '../../model/todolistsSelectors'
 import { Todolist } from './Todolist/Todolist'
 
 export const Todolists = () => {
@@ -21,7 +23,7 @@ export const Todolists = () => {
 				return (
 					<Grid key={tl.id}>
 						<Paper sx={{ p: '0 20px 20px 20px' }}>
-							<Todolist todolist={tl} />
+							<Todolist key={tl.id} todolist={tl} />
 						</Paper>
 					</Grid>
 				)

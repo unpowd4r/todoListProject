@@ -5,6 +5,6 @@ export const handleServerNetworkError = (
 	error: { message: string },
 	dispatch: Dispatch
 ) => {
-	dispatch(setAppError({ status: error.message }))
+	dispatch(setAppError({ error: error.message }))
 	dispatch(setAppStatus({ status: 'failed' }))
 }

@@ -48,9 +48,7 @@ export const tasksSlice = createSlice({
 			domainModel: UpdateTaskDomainModel
 		}>((state, action) => {
 			const tasks = state[action.payload.todolistId]
-			const index = tasks.findIndex(
-				(t: DomainTask) => t.id === action.payload.taskId
-			)
+			const index = tasks.findIndex(t => t.id === action.payload.taskId)
 			if (index !== -1) {
 				tasks[index] = { ...tasks[index], ...action.payload.domainModel }
 			}
@@ -68,8 +66,12 @@ export const tasksSlice = createSlice({
 				delete state[action.payload.id]
 			})
 	},
+	selectors: {
+		selectTasks: state => state,
+	},
 })
 
+export const { selectTasks } = tasksSlice.selectors
 export const { addTask, clearTasks, removeTask, setTasks, updateTask } =
 	tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
@@ -138,9 +140,7 @@ export const updateTaskTC =
 		const { taskId, todolistId, domainModel } = arg
 		const allTasksFromState = getState().tasks
 		const tasksForCurrentTodolist = allTasksFromState[todolistId]
-		const task = tasksForCurrentTodolist.find(
-			(t: DomainTask) => t.id === taskId
-		)
+		const task = tasksForCurrentTodolist.find(t => t.id === taskId)
 
 		if (task) {
 			const updatedTaskModel: UpdateTaskModel = {

@@ -7,15 +7,19 @@ import {
 	Toolbar,
 } from '@mui/material'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { authSlice, logoutTC } from 'features/auth/model/authSlice'
-import { changeTheme } from '../../app/appSlice'
+import { logoutTC, selectIsLoggedIn } from 'features/auth/model/authSlice'
+import {
+	changeTheme,
+	selectAppStatus,
+	selectThemeMode,
+} from '../../app/appSlice'
 import { MenuButton } from '../../app/styledComponents/MenuButton'
 import { useAppSelector } from '../hooks/useAppSelector'
 
 export const Header = () => {
 	const dispatch = useAppDispatch()
-	const themeMode = useAppSelector(state => state.app.themeMode)
-	const status = useAppSelector(state => state.app.status)
+	const themeMode = useAppSelector(selectThemeMode)
+	const status = useAppSelector(selectAppStatus)
 
 	const changeModeHandler = () => {
 		dispatch(
@@ -23,7 +27,7 @@ export const Header = () => {
 		)
 	}
 
-	const isLoggedIn = useAppSelector(authSlice.selectors.selectIsLoggedIn)
+	const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
 	const handleLogout = () => {
 		dispatch(logoutTC())

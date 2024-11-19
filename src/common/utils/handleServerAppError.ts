@@ -7,9 +7,9 @@ export const handleServerAppError = <T>(
 	dispatch: Dispatch
 ) => {
 	if (data.messages.length) {
-		dispatch(setAppError({ status: data.messages[0] }))
+		dispatch(setAppError({ error: data.messages[0] }))
 	} else {
-		dispatch(setAppError({ status: 'Some error occurred' }))
+		dispatch(setAppError({ error: 'Some error occurred' }))
 	}
 	dispatch(setAppStatus({ status: 'failed' }))
 }
