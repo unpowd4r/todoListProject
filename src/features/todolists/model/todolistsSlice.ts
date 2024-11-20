@@ -4,7 +4,7 @@ import { ResultCode } from 'common/enums/enums'
 import { handleServerAppError } from 'common/utils/handleServerAppError'
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError'
 import { Dispatch } from 'redux'
-import { todolistsApi } from '../api/todolistsApi'
+import { _todolistsApi } from '../api/todolistsApi'
 import { Todolist } from '../api/todolistsApi.types'
 
 export type FilterValuesType = 'all' | 'active' | 'completed'
@@ -87,7 +87,7 @@ export const todolistsReducer = todolistsSlice.reducer
 
 export const fetchTodolistsTC = (dispatch: Dispatch) => {
 	dispatch(setAppStatus({ status: 'loading' }))
-	todolistsApi
+	_todolistsApi
 		.getTodolists()
 		.then(res => {
 			dispatch(setAppStatus({ status: 'succeeded' }))
@@ -100,7 +100,7 @@ export const fetchTodolistsTC = (dispatch: Dispatch) => {
 
 export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
 	dispatch(setAppStatus({ status: 'loading' }))
-	todolistsApi
+	_todolistsApi
 		.createTodolist(title)
 		.then(res => {
 			if (res.data.resultCode === ResultCode.Success) {
@@ -116,7 +116,7 @@ export const addTodolistTC = (title: string) => (dispatch: Dispatch) => {
 export const removeTodolistTC = (id: string) => (dispatch: Dispatch) => {
 	dispatch(setAppStatus({ status: 'loading' }))
 	dispatch(changeTodolistEntityStatus({ id, entityStatus: 'loading' }))
-	todolistsApi
+	_todolistsApi
 		.removeTodolist(id)
 		.then(res => {
 			if (res.data.resultCode === ResultCode.Success) {
@@ -137,7 +137,7 @@ export const updateTodolistTitleTC =
 	(arg: { id: string; title: string }) => (dispatch: Dispatch) => {
 		dispatch(setAppStatus({ status: 'loading' }))
 		const { id, title } = arg
-		todolistsApi
+		_todolistsApi
 			.updateTodolist({ id, title })
 			.then(res => {
 				if (res.data.resultCode === ResultCode.Success) {
