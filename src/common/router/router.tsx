@@ -5,7 +5,7 @@ import { Main } from "../../app/Main"
 import { Login } from "../../features/auth/ui/Login/Login"
 
 export const Path = {
-  Login: "login",
+  Login: "/login",
 } as const
 
 export const router = createBrowserRouter([
@@ -15,6 +15,10 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <Main />,
+      },
+      {
+        path: "/todoListProject",
         element: <Main />,
       },
       {
