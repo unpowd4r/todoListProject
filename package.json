@@ -7,6 +7,7 @@
   },
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://unpowd4r.github.io/todoListProject",
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
@@ -35,6 +36,8 @@
     "web-vitals": "^3.5.1"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
