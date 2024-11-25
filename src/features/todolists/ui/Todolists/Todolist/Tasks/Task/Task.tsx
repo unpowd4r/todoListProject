@@ -1,15 +1,14 @@
-import { EditableSpan } from "common/components"
-import { TaskStatus } from "common/enums"
-import { useAppDispatch } from "common/hooks"
-import { DomainTask } from "../../../../../api/tasksApi.types"
-import { removeTaskTC, updateTaskTC } from "../../../../../model/tasksSlice"
-import { DomainTodolist } from "../../../../../model/todolistsSlice"
-import { getListItemSx } from "./Task.styles"
-import { ChangeEvent } from "react"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Checkbox from "@mui/material/Checkbox"
 import IconButton from "@mui/material/IconButton"
 import ListItem from "@mui/material/ListItem"
+import { EditableSpan } from "common/components"
+import { TaskStatus } from "common/enums"
+import { useDeleteTaskMutation, useUpdateTaskMutation } from "features/todolists/api/tasksApi"
+import { ChangeEvent } from "react"
+import { DomainTask, UpdateTaskModel } from "../../../../../api/tasksApi.types"
+import { DomainTodolist } from "../../../../../model/todolistsSlice"
+import { getListItemSx } from "./Task.styles"
 
 type Props = {
   task: DomainTask
@@ -17,19 +16,39 @@ type Props = {
 }
 
 export const Task = ({ task, todolist }: Props) => {
-  const dispatch = useAppDispatch()
+  const [deleteTask] = useDeleteTaskMutation()
+  const [updateTask] = useUpdateTaskMutation()
 
   const removeTaskHandler = () => {
-    dispatch(removeTaskTC({ taskId: task.id, todolistId: todolist.id }))
+    deleteTask({ todolistId: todolist.id, taskId: task.id })
   }
 
   const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
     let status = e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New
-    dispatch(updateTaskTC({ taskId: task.id, todolistId: todolist.id, domainModel: { status } }))
+
+    const model: UpdateTaskModel = {
+      status,
+      title: task.title,
+      deadline: task.deadline,
+      description: task.description,
+      priority: task.priority,
+      startDate: task.startDate,
+    }
+
+    updateTask({ taskId: task.id, todolistId: todolist.id, model })
   }
 
   const changeTaskTitleHandler = (title: string) => {
-    dispatch(updateTaskTC({ taskId: task.id, todolistId: todolist.id, domainModel: { title } }))
+    const model: UpdateTaskModel = {
+      status: task.status,
+      title,
+      deadline: task.deadline,
+      description: task.description,
+      priority: task.priority,
+      startDate: task.startDate,
+    }
+
+    updateTask({ taskId: task.id, todolistId: todolist.id, model })
   }
 
   const disabled = todolist.entityStatus === "loading"

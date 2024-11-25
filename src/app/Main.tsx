@@ -5,8 +5,8 @@ import { useAppSelector } from "common/hooks"
 import { Path } from "common/router"
 import { useAddTodolistsMutation } from "features/todolists/api/todolistsApi"
 import { Navigate } from "react-router-dom"
-import { selectIsLoggedIn } from "../features/auth/model/authSlice"
 import { Todolists } from "../features/todolists/ui/Todolists/Todolists"
+import { selectIsLoggedIn } from "./appSlice"
 
 export const Main = () => {
   const [addTodolist] = useAddTodolistsMutation()
