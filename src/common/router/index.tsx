@@ -1,1 +1,1 @@
-export { Path, router } from './router'
+export * from "./router"
