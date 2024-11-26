@@ -38,7 +38,7 @@ export const taskApi = baseApi.injectEndpoints({
         return {
           method: "PUT",
           url: `todo-lists/${todolistId}/tasks/${taskId}`,
-          body: { model },
+          body: { ...model },
         }
       },
       invalidatesTags: ["Task"],
