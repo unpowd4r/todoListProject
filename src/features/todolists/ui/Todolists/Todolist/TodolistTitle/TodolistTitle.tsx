@@ -8,7 +8,7 @@ import {
   useRemoveTodolistMutation,
   useUpdateTodolistTitleMutation,
 } from "features/todolists/api/todolistsApi"
-import { DomainTodolist } from "../../../../model/todolistsSlice"
+import { DomainTodolist } from "features/todolists/lib/types/types"
 import s from "./TodolistTitle.module.css"
 
 type Props = {

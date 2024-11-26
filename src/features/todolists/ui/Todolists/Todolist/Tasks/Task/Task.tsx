@@ -5,9 +5,9 @@ import ListItem from "@mui/material/ListItem"
 import { EditableSpan } from "common/components"
 import { TaskStatus } from "common/enums"
 import { useDeleteTaskMutation, useUpdateTaskMutation } from "features/todolists/api/tasksApi"
+import { DomainTodolist } from "features/todolists/lib/types/types"
 import { ChangeEvent } from "react"
 import { DomainTask, UpdateTaskModel } from "../../../../../api/tasksApi.types"
-import { DomainTodolist } from "../../../../../model/todolistsSlice"
 import { getListItemSx } from "./Task.styles"
 
 type Props = {

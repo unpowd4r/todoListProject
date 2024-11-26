@@ -6,45 +6,13 @@ import FormGroup from "@mui/material/FormGroup"
 import FormLabel from "@mui/material/FormLabel"
 import Grid from "@mui/material/Grid"
 import TextField from "@mui/material/TextField"
-import { ResultCode } from "common/enums"
-import { useAppDispatch, useAppSelector } from "common/hooks"
-import { getTheme } from "common/theme"
-import { useLoginMutation } from "features/auth/api/authAPI"
-import { LoginArgs } from "features/auth/api/authAPI.types"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { useLogin } from "features/todolists/lib/lib/hooks/useLogin"
+import { Controller } from "react-hook-form"
 import { Navigate } from "react-router-dom"
-import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from "../../../../app/appSlice"
 import s from "./Login.module.css"
 
 export const Login = () => {
-  const themeMode = useAppSelector(selectThemeMode)
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
-  const theme = getTheme(themeMode)
-
-  const dispatch = useAppDispatch()
-
-  const [login] = useLoginMutation()
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm<LoginArgs>({ defaultValues: { email: "", password: "", rememberMe: false } })
-
-  const onSubmit: SubmitHandler<LoginArgs> = (data) => {
-    login(data)
-      .then((res) => {
-        if (res.data?.resultCode === ResultCode.Success) {
-          dispatch(setIsLoggedIn({ isLoggedIn: true }))
-          localStorage.setItem("sn-token", res.data.data.token)
-        }
-      })
-      .finally(() => {
-        reset()
-      })
-  }
+  const { theme, isLoggedIn, control, onSubmit, handleSubmit, errors, register } = useLogin()
 
   if (isLoggedIn) {
     return <Navigate to={"/"} />
